@@ -1,38 +1,38 @@
-    <div class="join-container">
-        <header class="join-header">Login</header>
-        <main class="join-main">
-            <div>
-                <p>Username:</p>
+<div class="join-container">
+    <p class="p-title">Login</p>
+    <main class="join-main">
+        <div>
+            <form action="main.handlebars">
+                <label>Username</label>
                 <input type="username" name="username" id="usernameForm">
-                <p>Password:</p>
+                <label>Password</label>
                 <input type="password" name="password" id="passwordForm">
+                <p class="p-sm">Don't have an account? <a class="hyperlink" href="/signup">Sign Up</a></p>
                 <button class="btn" onclick="login()">Submit</button>
-                <form action="main.handlebars">
-                    <button class="btn">Back to Home</button>
-                </form>
-            </div>
-        </main>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.3.js"
-        integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        const login = async () => {
-            let username = document.getElementById("usernameForm").value;
-            let password = document.getElementById("usernameForm").value;
-            console.log(username, password)
-            let data = {
-                username: username,
-                password: password
-            }
-            $.ajax({
-                type: "POST",
-                dataType : 'json',   //you may use jsonp for cross origin request
-                crossDomain:true,
-                contentType: "application/json",
-                url: "http://localhost:3001/users/login",
-                data: JSON.stringify(data)
-            }).then(results => {
-                alert(results.message)
-            })
+            </form>
+        </div>
+    </main>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+    crossorigin="anonymous"></script>
+<script type="text/javascript">
+    const login = async () => {
+        let username = document.getElementById("usernameForm").value;
+        let password = document.getElementById("usernameForm").value;
+        console.log(username, password)
+        let data = {
+            username: username,
+            password: password
         }
-    </script>
+        $.ajax({
+            type: "POST",
+            dataType: 'json',   //you may use jsonp for cross origin request
+            crossDomain: true,
+            contentType: "application/json",
+            url: "http://localhost:3001/users/login",
+            data: JSON.stringify(data)
+        }).then(results => {
+            alert(results.message)
+        })
+    }
+</script>

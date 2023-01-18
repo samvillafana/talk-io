@@ -452,43 +452,41 @@ a {
 }
 
 /* Join Page */
-.join-container {
-    max-width: 500px;
-    margin: 80px auto;
-    color: #fff;
+
+.p-title {
+    font-size: 22px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--light-color);
 }
 
-.join-header {
-    text-align: center;
-    padding: 20px;
-    background: var(--dark-color-a);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+.join-container {
+    max-width: 500px;
+    margin: auto;
+
 }
 
 .join-main {
-    padding: 30px 40px;
+    margin: 30px auto;
     background: var(--dark-color-b);
 }
 
-.join-main p {
-    margin-bottom: 20px;
-}
-
-.join-main .form-control {
-    margin-bottom: 20px;
+form {
+    margin: auto;
 }
 
 .join-main label {
     display: block;
     margin-bottom: 5px;
+    color: var(--light-color);
 }
 
-.join-main input[type='text'] {
+.join-main input {
+    width: 400px;
+    margin: auto;
     font-size: 16px;
     padding: 5px;
-    height: 40px;
-    width: 100%;
+    border-radius: 5px;
 }
 
 .join-main select {
@@ -499,8 +497,30 @@ a {
 }
 
 .join-main .btn {
-    margin-top: 20px;
-    width: 100%;
+    margin: 20px auto;
+    width: 200px;
+    font-weight: bold;
+    color: var(--dark-blue);
+}
+
+.btn:hover {
+    background-color: var(--yellow-color);
+    color: var(--dark-blue);
+}
+
+.p-sm {
+    font-size: 16px;
+    color: white;
+}
+
+.hyperlink {
+    color: var(--light-color);
+    text-decoration: none;
+}
+
+.hyperlink:hover {
+    color: var(--yellow-color);
+    text-decoration: none;
 }
 
 @media (max-width: 700px) {
