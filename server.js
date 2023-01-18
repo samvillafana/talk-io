@@ -68,6 +68,29 @@ ioServer.on("connection", (socket) => {
     });
   });
 
+  // Listen for chatMessage
+  socket.on("chatMessage", (msg) => {
+    const user = getCurrentUser(socket.id);
+    ioServer.to(user.room).emit("message", formatMessage(user.username, msg));
+  });
+
+  // Runs when client disconnects
+  socket.on("disconnect", () => {
+    const user = userLeave(socket.id);
+
+    if (user) {
+      ioServer.to(user.room).emit(
+        "message",
+        formatMessage(botName, `${user.username} has left the chat`)
+      );
+
+      // Send users and room info
+      ioServer.to(user.room).emit("roomUsers", {
+        room: user.room,
+        users: getRoomUsers(user.room),
+      });
+    }
+  });
 });
 
 
