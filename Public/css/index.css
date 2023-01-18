@@ -5,6 +5,7 @@
     --light-color: #A6D7F7;
     --success-color: #91cf91;
     --error-color: #CC3333;
+    --yellow-color: #f7efa6;
 }
 
 body {
@@ -73,7 +74,7 @@ nav a {
 }
 
 nav a:hover {
-    background-color: var(--success-color);
+    background-color: var(--yellow-color);
     color: var(--dark-blue);
     cursor: pointer;
     padding: 7px;
@@ -308,7 +309,7 @@ footer {
 }
 
 .footer-social-links a:hover:before {
-    background: var(--light-color);
+    background: var(--yellow-color);
 }
 
 /* Media Screen */
