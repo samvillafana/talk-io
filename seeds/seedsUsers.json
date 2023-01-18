@@ -1,18 +1,26 @@
 [
   {
     "username": "krgurevich",
-    "password": "password12345"
+    "password": "password12345",
+    "room": 1,
+    "isLoggedIn": false
   },
   {
     "username": "AlbertoJL3",
-    "password": "password12345"
+    "password": "password12345",
+    "room": 1,
+    "isLoggedIn": false
   },
   {
     "username": "SamVillafana",
-    "password": "password12345"
+    "password": "password12345",
+    "room": 1,
+    "isLoggedIn": true
   },
   {
     "username": "AliBailoun",
-    "password": "password12345"
+    "password": "password12345",
+    "room": 1,
+    "isLoggedIn": true
   }
 ]

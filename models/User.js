@@ -27,6 +27,16 @@ User.init(
         len: [8],
       },
     },
+    room: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: false,
+    },
+    isLoggedIn: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {
     hooks: {
