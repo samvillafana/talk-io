@@ -7,7 +7,7 @@ const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const app = express();
 const PORT = process.env.PORT || 3001;
-const handlebars= exphbs.create({})
+const handlebars = exphbs.create({})
 const path = require("path");
 const http = require("http");
 const socketio = require("socket.io");
@@ -34,7 +34,7 @@ const sess = {
 };
 const botName = "TalkIO Bot";
 app.use(session(sess));
-app.engine('handlebars',handlebars.engine)
+app.engine('handlebars', handlebars.engine)
 app.set('view engine', "handlebars")
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -42,6 +42,14 @@ app.use(cors());
 
 app.use(routes);
 
-sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log('Now listening on port ' + PORT));
+// Run when client connects
+ioServer.on("connection", (socket) => {
+
+ 
 });
+
+
+
+  sequelize.sync({ force: false }).then(() => {
+    app.listen(PORT, () => console.log('Now listening on port ' + PORT));
+  });
