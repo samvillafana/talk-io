@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
   res.render("home");
 });
 
-router.get("/lander/:id", withAuth, async (req, res) => {
+router.get("/chat/:id", withAuth, async (req, res) => {
   try {
     const postData = await User.findByPk(req.params.id, {
       include: [
@@ -22,7 +22,7 @@ router.get("/lander/:id", withAuth, async (req, res) => {
       plain: true,
     });
 
-    res.render("lander", {
+    res.render("chat", {
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -31,7 +31,7 @@ router.get("/lander/:id", withAuth, async (req, res) => {
 });
 router.get("/login", (req, res) => {
   if (req.session.logged_in) {
-    res.redirect("/lander");
+    res.redirect("/chat");
     return;
   }
 
@@ -40,7 +40,7 @@ router.get("/login", (req, res) => {
 
 router.get("/signup", (req, res) => {
   if (req.session.logged_in) {
-    res.redirect("/lander");
+    res.redirect("/chat");
     return;
   }
   res.render("signup");
