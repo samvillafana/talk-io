@@ -15,12 +15,33 @@
   <div class="chat-form-container">
     <form id="chat-form">
       <input id="msg" type="text" placeholder="Enter Message" required autocomplete="off" />
-      <button class="btn"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;Send</button>
+      <button id='send'class="btn"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;Send</button>
     </form>
   </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js"
   integrity="sha256-TDxXjkAUay70ae/QJBEpGKkpVslXaHHayklIVglFRT4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+  crossorigin="anonymous"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script src="js/main.js"></script>
+<script type="text/javascript">
+  $("#send").on("click", async (event) => {
+  event.preventDefault();
+    let message = $("#msg").val().trim();
+    let room = 34
+
+    if (message) {
+      const response = await fetch("http://localhost:3001/api/users/message", {
+        method: "POST",
+        body: JSON.stringify({ message, room,  }),
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log(response)
+    } else {
+      alert('fail')
+    }
+
+  })
+
+</script>

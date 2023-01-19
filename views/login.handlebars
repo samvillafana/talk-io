@@ -2,13 +2,13 @@
     <p class="p-title">Login</p>
     <main class="join-main">
         <div>
-            <form action="main.handlebars">
+            <form>
                 <label>Username</label>
                 <input type="username" name="username" id="usernameForm">
                 <label>Password</label>
                 <input type="password" name="password" id="passwordForm">
                 <p class="p-sm">Don't have an account? <a class="hyperlink" href="/signup">Sign Up</a></p>
-                <button class="btn" onclick="login()">Submit</button>
+                <button class="btn" id="submit" type="submit">Submit</button>
             </form>
         </div>
     </main>
@@ -16,23 +16,35 @@
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
     crossorigin="anonymous"></script>
 <script type="text/javascript">
-    const login = async () => {
-        let username = document.getElementById("usernameForm").value;
-        let password = document.getElementById("usernameForm").value;
+
+    $("#submit").on("click", async (event) => {
+        // Stop the browser from submitting the form
+        event.preventDefault();
+        console.log('here')
+
+        // Gather the data from the form elements on the page
+        const username = document.querySelector("#usernameForm").value.trim();
+        const password = document.querySelector("#passwordForm").value.trim();
+
         console.log(username, password)
-        let data = {
-            username: username,
-            password: password
+
+        if (username && password) {
+            // Send the e-mail and password to the server
+            const response = await fetch("http://localhost:3001/api/users/login", {
+                method: "POST",
+                body: JSON.stringify({ username, password }),
+                headers: { "Content-Type": "application/json" },
+            });
+            console.log(response)
+
+            if (response.ok) {
+                document.location.replace("/chat");
+            } else {
+                alert("Failed to log in");
+            }
         }
-        $.ajax({
-            type: "POST",
-            dataType: 'json',   //you may use jsonp for cross origin request
-            crossDomain: true,
-            contentType: "application/json",
-            url: "http://localhost:3001/users/login",
-            data: JSON.stringify(data)
-        }).then(results => {
-            alert(results.message)
-        })
-    }
+    })
+
+
+
 </script>
