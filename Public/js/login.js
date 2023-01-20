@@ -6,7 +6,7 @@ const loginFormHandler = async (event) => {
   const email = document.querySelector("#email-login").value.trim();
   const password = document.querySelector("#password-login").value.trim();
 
-  if (email && password) {
+  if ( && password) {
     // Send the e-mail and password to the server
     const response = await fetch("/api/users/login", {
       method: "POST",
