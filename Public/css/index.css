@@ -457,6 +457,9 @@ a {
     flex: 1;
 }
 
+.btn {
+    font-weight: bold;
+}
 
 /* Join Page */
 
