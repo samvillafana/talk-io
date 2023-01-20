@@ -19,33 +19,38 @@ const {
   userLeave,
   getRoomUsers,
 } = require("./utils/users");
+
 // const app = express();
 const server = http.createServer(app);
-const ioServer = socketio(server);
+const io = socketio(server);
+
 
 const sess = {
   secret: process.env.DB_SECRET_SESSION,
-  cookie: {},
+  cookie: {maxAge:60*1000},
   resave: false,
   saveUninitialized: true,
   store: new SequelizeStore({
     db: sequelize,
   }),
 };
+
 const botName = "TalkIO Bot";
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(session(sess));
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
 app.use(cors());
 app.use(express.static(path.join(__dirname, "Public")));
 
 app.use(routes);
 
 // Run when client connects
-ioServer.on("connection", (socket) => {
+io.on("connection", (socket) => {
   socket.on("joinRoom", ({ username, room }) => {
+    console.log(socket.id);
     const user = userJoin(socket.id, username, room);
 
     socket.join(user.room);
@@ -62,7 +67,7 @@ ioServer.on("connection", (socket) => {
       );
 
     // Send users and room info
-    ioServer.to(user.room).emit("roomUsers", {
+    io.to(user.room).emit("roomUsers", {
       room: user.room,
       users: getRoomUsers(user.room),
     });
@@ -71,7 +76,7 @@ ioServer.on("connection", (socket) => {
   // Listen for chatMessage
   socket.on("chatMessage", (msg) => {
     const user = getCurrentUser(socket.id);
-    ioServer.to(user.room).emit("message", formatMessage(user.username, msg));
+    io.to(user.room).emit("message", formatMessage(user.username, msg));
   });
 
   // Runs when client disconnects
@@ -79,7 +84,7 @@ ioServer.on("connection", (socket) => {
     const user = userLeave(socket.id);
 
     if (user) {
-      ioServer
+      io
         .to(user.room)
         .emit(
           "message",
@@ -87,7 +92,7 @@ ioServer.on("connection", (socket) => {
         );
 
       // Send users and room info
-      ioServer.to(user.room).emit("roomUsers", {
+      io.to(user.room).emit("roomUsers", {
         room: user.room,
         users: getRoomUsers(user.room),
       });
@@ -98,3 +103,4 @@ ioServer.on("connection", (socket) => {
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log("Now listening on port " + PORT));
 });
+

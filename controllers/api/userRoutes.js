@@ -1,6 +1,5 @@
 const router = require('express').Router();
-const { User, Message } = require('../../models/');
-
+const { User } = require('../../models');
 
 router.get('/', async (req, res) => {
   try {
@@ -16,59 +15,61 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-
     const userData = await User.create(req.body);
-    console.log(req.body)
-    return res.status(200).json(userData);
 
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+
+      res.status(200).json(userData);
+    });
   } catch (err) {
-    console.log(req.body)
     res.status(400).json(err);
   }
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   try {
-    User.findOne({
-      where: {
-        username: req.body.username,
+    const userData = await User.findOne({ where: { username: req.body.username } });
+
+    if (!userData) {
+      // If the user doesn't exist, create a new user with the provided username and password
+      res
+        .status(400)
+        .json({ message: 'Incorrect username or password, please try again' });
+      return;
+    } else {
+      // If the user exists, check the password
+      const validPassword = await userData.checkPassword(req.body.password);
+
+      if (!validPassword) {
+        res
+          .status(400)
+          .json({ message: 'Incorrect username or password, please try again' });
+        return;
       }
-    })
-      .then(user => {
-        if (!user) {
-          return res.status(401).json({ message: 'Invalid username or password' });
-        }
-        if (!user.checkPassword(req.body.password)) {
-          return res.status(401).json({ message: 'Invalid username or password' });
-        }
-        user.update({
-          isLoggedIn: true
-        });
-        res.status(200).json({ message: 'Logged in successfully' });
-      })
-  }
-  catch (err) {
-    res.status(500).json(err);
-    console.log(req.body)
+    }
+
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+    
+      res.json({ user: userData, message: 'You are now logged in!' });
+    });
+
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
 router.post('/logout', (req, res) => {
-  User.findOne({
-    where: {
-      username: req.body.username,
-    }
-  })
-    .then(user => {
-      if (!user) {
-        return res.status(401).json({ message: 'Invalid username or password' });
-      }
-      user.update({
-        isLoggedIn: false
-      });
-      res.status(200).json({ message: 'Logged out successfully' });
-    })
-    .catch(err => res.status(500).json(err));
+  if (req.session.logged_in) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
 });
 
 router.post('/message', async (req, res) => {

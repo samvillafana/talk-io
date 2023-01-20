@@ -1,5 +1,5 @@
 const User = require('./User');
-const Message = require('./Message')
+// const Message = require('./Message')
 
 module.exports = { User };
-module.exports = { Message };
+// module.exports = { Message };

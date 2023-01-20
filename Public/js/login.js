@@ -6,20 +6,21 @@ const loginFormHandler = async (event) => {
   console.log('here')
 
   // Gather the data from the form elements on the page
-  const email = document.querySelector("#email-login").value.trim();
-  const password = document.querySelector("#password-login").value.trim();
+  const username = document.querySelector("#usernameForm").value.trim();
+  const password = document.querySelector("#passwordForm").value.trim();
+  const room = 1;
 
-  if ( && password) {
+
     // Send the e-mail and password to the server
-    const response = await fetch("http://localhost:3001/api/users/login", {
+    const response = await fetch("/api/users/login", {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password, room }),
       headers: { "Content-Type": "application/json" },
     });
     console.log(response)
 
     if (response.ok) {
-      document.location.replace("/");
+      document.location.replace("/chat/:id");
     } else {
       alert("Failed to log in");
     }
