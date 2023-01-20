@@ -1,13 +1,16 @@
-console.log('connected')
+console.log('connected main')
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
+const room =1;
 
 // Get username and room from URL
-const { username, room } = Qs.parse(location.search, {
+const u  = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 });
+const username = u.username;
+console.log(username)
 
 const socket = io();
 
@@ -85,7 +88,7 @@ function outputUsers(users) {
 document.getElementById('leave-btn').addEventListener('click', () => {
   const leaveRoom = confirm('Are you sure you want to leave the chatroom?');
   if (leaveRoom) {
-    window.location = '../index.html';
+    window.location = '../';
   } else {
   }
 });

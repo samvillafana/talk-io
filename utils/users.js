@@ -1,4 +1,3 @@
-//Tracks all users that have joined the chat.
 const users = [];
 
 // Join user to chat

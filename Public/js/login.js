@@ -17,15 +17,15 @@ const loginFormHandler = async (event) => {
       body: JSON.stringify({ username, password, room }),
       headers: { "Content-Type": "application/json" },
     });
-    console.log(response)
+    console.log(response.body)
 
     if (response.ok) {
-      document.location.replace("/chat/:id");
+      document.location.replace("/chat?username="+username);
     } else {
       alert("Failed to log in");
     }
   }
-};
+
 
 document
   .querySelector(".join-container")
