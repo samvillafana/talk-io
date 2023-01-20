@@ -25,6 +25,10 @@ header {
     background-color: var(--dark-blue);
 }
 
+#users {
+    color:var(--dark-blue);
+}
+
 .hdr-aside {
     flex: 1;
 }
