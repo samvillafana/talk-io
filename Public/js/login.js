@@ -10,10 +10,7 @@ const loginFormHandler = async (event) => {
   const password = document.querySelector("#passwordForm").value.trim();
   const room = 1;
 
-  console.log(username);
-  console.log(password);
 
-  if (username && password) {
     // Send the e-mail and password to the server
     const response = await fetch("/api/users/login", {
       method: "POST",
