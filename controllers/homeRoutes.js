@@ -7,6 +7,11 @@ router.get("/", async (req, res) => {
   res.render("home");
 });
 
+router.get("/chat", async (req, res) => {
+  // Send the rendered Handlebars.js template back as the response
+  res.render("chat");
+});
+
 router.get("/chat/:id", withAuth, async (req, res) => {
   try {
     const postData = await User.findByPk(req.params.id, {
