@@ -100,10 +100,11 @@ document.getElementById('leave-btn').addEventListener('click', () => {
   
     if (response.ok) {
       // If successfully logged out, redirect to the main page
-      document.location.replace('/home');
+      document.location.replace('/');
     } else {
       alert(response.statusText);
     }
   };
+  logout();
 });
 
