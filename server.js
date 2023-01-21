@@ -20,12 +20,9 @@ const {
   getRoomUsers,
 } = require("./utils/users");
 
-
-
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
-
 
 const sess = {
   secret: process.env.DB_SECRET_SESSION,
@@ -50,7 +47,7 @@ const botName = "TalkIO Bot";
 app.use(routes);
 
 io.on("connection", (socket) => {
-  console.log('new connection');
+  console.log("new connection");
   socket.on("joinRoom", ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
 
@@ -106,5 +103,3 @@ io.on("connection", (socket) => {
 sequelize.sync({ force: false }).then(() => {
   server.listen(PORT, () => console.log("Now listening on port " + PORT));
 });
-
-
