@@ -5,29 +5,21 @@ const withAuth = require("../utils/auth");
 router.get("/", async (req, res) => {
   // Send the rendered Handlebars.js template back as the response
   res.render("home");
-});
+}); 
 
-router.get("/chat", async (req, res) => {
-  // Send the rendered Handlebars.js template back as the response
-  res.render("chat");
-});
-
-router.get("/chat/:id", withAuth, async (req, res) => {
+router.get("/chat", withAuth, async (req, res) => {
   try {
-    const postData = await User.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          attributes: ["username"],
-        },
-      ],
-    });
-
-    const post = userData.get({
+    const userData = await User.findByPk(req.session.user_id, {});
+    console.log(userData);
+    const user = userData.get({
       plain: true,
     });
-
+    if (req.query.username !== user.username) {
+      res.render("home");
+      return;
+    }
     res.render("chat", {
+      ...user,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -37,7 +29,7 @@ router.get("/chat/:id", withAuth, async (req, res) => {
 
 router.get("/login", (req, res) => {
   if (req.session.logged_in) {
-    res.redirect("/chat");
+    res.redirect("/chat?username=" + req.session.username);
     return;
   }
 
@@ -46,7 +38,7 @@ router.get("/login", (req, res) => {
 
 router.get("/signup", (req, res) => {
   if (req.session.logged_in) {
-    res.redirect("/chat");
+    res.redirect("/chat?username=" + req.session.username);
     return;
   }
   res.render("signup");

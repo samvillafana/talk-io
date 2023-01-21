@@ -25,10 +25,6 @@ header {
     background-color: var(--dark-blue);
 }
 
-#users {
-    color:var(--dark-blue);
-}
-
 .hdr-aside {
     flex: 1;
 }
@@ -408,6 +404,10 @@ a {
     font-weight: bold;
 }
 
+h2 {
+    color: var(--dark-blue);
+}
+
 .chat-sidebar h3 {
     color: var(--dark-blue);
     margin-bottom: 15px;
@@ -415,8 +415,14 @@ a {
     font-weight: bold;
 }
 
-.chat-sidebar ul li {
-    padding: 10px 0;
+#users li {
+    color: var(--dark-blue);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#users {
+    padding-left: 0px;
 }
 
 .chat-messages {
