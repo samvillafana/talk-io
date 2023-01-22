@@ -5,7 +5,7 @@ const withAuth = require("../utils/auth");
 router.get("/", async (req, res) => {
   // Send the rendered Handlebars.js template back as the response
   res.render("home");
-}); 
+});
 
 router.get("/chat", withAuth, async (req, res) => {
   try {
