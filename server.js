@@ -101,5 +101,5 @@ io.on("connection", (socket) => {
 });
 
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () => console.log("Now listening on port " + PORT));
+ 
 });
